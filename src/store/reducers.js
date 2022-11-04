@@ -23,7 +23,9 @@ export const fieldReducer = (state, action) => {
         return newState
       case 'REMOVE_FIELD':
         // filter the array for the field with the ID to be removed
-        newState = newState.filter(field => field.fieldId !== action.payload.fieldId)
+        if (newState.length !== 0 && action.payload.fieldId !== -1) {
+          newState = newState.filter(field => field.fieldId !== action.payload.fieldId)
+        }
         return newState
       case 'TOGGLE_FIELD':
         if (index !== -1) {

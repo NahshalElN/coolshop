@@ -26,13 +26,13 @@ function App() {
         total = total - parseInt(field.value)
       }
     })
-  } else { // if there's only one field
-    total = fields[0].operator === "+" ? fields[0].value : 0 - fields[0].value
+  } else { // if there's only one or no field
+    total = fields[0] ? fields[0].value : 0
   }
 
   return (
     // uses tailwind classes for simple quick styling
-    <div className="App p-6 h-full w-full">
+    <div className="App p-6 h-full w-full relative">
       <button className='bg-indigo-500 text-white rounded px-4 py-2 mb-4' onClick={() => dispatchFields(addField())}>Add Field</button>
       {/* render all fields + all possible functions */}
       {fields.map(field => (
@@ -54,11 +54,10 @@ function App() {
             min={0}
           />
           <button className='bg-indigo-500 text-white rounded px-4 py-2' onClick={() => dispatchFields(toggleField(field.fieldId))}>{field.disabled ? "Enable" : "Disable"}</button>
-          {/* If there's only 1 field, don't include remove functionality */}
-          {fields.length > 0 && <button className='bg-indigo-500 text-white rounded px-4 py-2' onClick={() => dispatchFields(removeField(field.fieldId))}>Remove Field</button>}
+          <button className='bg-indigo-500 text-white rounded px-4 py-2' onClick={() => dispatchFields(removeField(field.fieldId))}>Remove Field</button>
         </div>
       ))}
-      <span className='font-semibold text-indigo-400'>Result: {total}</span>
+      <span className='font-semibold text-indigo-400 absolute bottom-0'>Result: {total}</span>
     </div>
   );
 }
