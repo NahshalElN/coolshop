@@ -14,26 +14,31 @@ function App() {
   ]
 
   const [fields, dispatchFields] = useReducer(fieldReducer, INITIAL_STATE)
+  // simple reducer to maintain fields state, will be triggered with an attached action type & payload.
 
-  var total = 0
-  if (fields.length > 1) {
-    fields.forEach(field => {
+  var total = 0 // total of all values in each field.
+  if (fields.length > 1) { 
+    // filter out fields where the value is Not a Number (empty fields mostly)
+    fields.filter(field => !isNaN(field.value)).forEach(field => {
       if (field.operator === "+") {
         total = total + parseInt(field.value)
       } else {
         total = total - parseInt(field.value)
       }
     })
-  } else {
+  } else { // if there's only one field
     total = fields[0].operator === "+" ? fields[0].value : 0 - fields[0].value
   }
 
   return (
-    <div className="App">
-      <button onClick={() => dispatchFields(addField())}>Add Field</button>
+    // uses tailwind classes for simple quick styling
+    <div className="App p-6 h-full w-full">
+      <button className='bg-indigo-500 text-white rounded px-4 py-2 mb-4' onClick={() => dispatchFields(addField())}>Add Field</button>
+      {/* render all fields + all possible functions */}
       {fields.map(field => (
-        <div key={field.fieldId}>
-          <select
+        <div key={field.fieldId} className="flex gap-4 mb-2">
+          <select 
+            className='border border-black rounded flex items-center '
             value={field.operator}
             onChange={e => dispatchFields(changeOperator(field.fieldId , e.target.selectedOptions[0].value))}
           >
@@ -43,14 +48,17 @@ function App() {
           <input
             disabled={field.disabled}
             value={field.value} 
-            onChange={e => dispatchFields(changeValue(field.fieldId, e.target.value))} 
+            onChange={e => dispatchFields(changeValue(field.fieldId, e.target.value))}
             type="number"
+            className="border border-black px-2 rounded"
+            min={0}
           />
-          <button onClick={() => dispatchFields(toggleField(field.fieldId))}>{field.disabled ? "enable" : "disable"}</button>
-          <button onClick={() => dispatchFields(removeField(field.fieldId))}>Remove Field</button>
+          <button className='bg-indigo-500 text-white rounded px-4 py-2' onClick={() => dispatchFields(toggleField(field.fieldId))}>{field.disabled ? "Enable" : "Disable"}</button>
+          {/* If there's only 1 field, don't include remove functionality */}
+          {fields.length > 0 && <button className='bg-indigo-500 text-white rounded px-4 py-2' onClick={() => dispatchFields(removeField(field.fieldId))}>Remove Field</button>}
         </div>
       ))}
-      <span>Result: {total}</span>
+      <span className='font-semibold text-indigo-400'>Result: {total}</span>
     </div>
   );
 }

@@ -12,27 +12,27 @@ export const fieldReducer = (state, action) => {
     
     switch(action.type) {
       case 'ADD_FIELD':
-        console.log("ADDING FIELD")
+        // push a new entry into the field array
         newState.push({
             fieldId: count,
             value: 0,
             enabled: false,
             operator: "+"
         })
-        count += 1
+        count += 1 //  increase count to have more IDs
         return newState
       case 'REMOVE_FIELD':
+        // filter the array for the field with the ID to be removed
         newState = newState.filter(field => field.fieldId !== action.payload.fieldId)
         return newState
       case 'TOGGLE_FIELD':
         if (index !== -1) {
-            console.log(newState[index])
             newState[index].disabled = !newState[index].disabled
         }
         return newState
       case 'CHANGE_VALUE':
-        if (index !== -1) {
-            newState[index].value = action.payload.value
+        if (index !== -1 ) {
+            newState[index].value = isNaN(action.payload.value) ? 0 : parseInt(action.payload.value)
         }
         return newState
       case 'CHANGE_OPERATOR':
