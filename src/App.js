@@ -21,9 +21,9 @@ function App() {
     // filter out fields where the value is Not a Number (empty fields mostly)
     fields.filter(field => !isNaN(field.value)).forEach(field => {
       if (field.operator === "+") {
-        total = total + parseInt(field.value)
+        total = total + parseInt(field.disabled ? 0 : field.value)
       } else {
-        total = total - parseInt(field.value)
+        total = total - parseInt(field.disabled ? 0 : field.value)
       }
     })
   } else { // if there's only one or no field
