@@ -12,7 +12,7 @@ export default function Field({ field, dispatchFields, removeField, toggleField,
     return (
       <div className="flex gap-4 mb-2">
         <select
-          className="border border-black rounded flex items-center"
+          className="border border-black rounded flex items-center p-2"
           value={field.operator}
           onChange={handleOperatorChange}
         >
@@ -28,13 +28,13 @@ export default function Field({ field, dispatchFields, removeField, toggleField,
           min={0}
         />
         <button
-          className="bg-indigo-500 text-white rounded px-4 py-2"
+          className="bg-indigo-500 hover:bg-red-500 text-white rounded px-4 py-2"
           onClick={() => dispatchFields(toggleField(field.fieldId))}
         >
           {field.disabled ? 'Enable' : 'Disable'}
         </button>
         <button
-          className="bg-indigo-500 text-white rounded px-4 py-2"
+          className="bg-indigo-500 hover:bg-red-800 text-white rounded px-4 py-2"
           onClick={() => dispatchFields(removeField(field.fieldId))}
         >
           Remove Field

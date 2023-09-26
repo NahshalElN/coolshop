@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="App p-6 h-full w-full relative">
-      <button className="bg-indigo-500 text-white rounded px-4 py-2 mb-4" onClick={() => dispatchFields(addField())}>
+      <button className="bg-indigo-500 hover:bg-indigo-700 text-white rounded px-4 py-2 mb-4" onClick={() => dispatchFields(addField())}>
         Add Field
       </button>
       {fields.map((field) => (
